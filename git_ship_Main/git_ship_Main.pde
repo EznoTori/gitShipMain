@@ -41,7 +41,7 @@ boolean atWarp;
 boolean showDialogue;
 
 Star[] stars = new Star[400];
-Planet earth;
+Planet[] planets;
 Person person;
 Checksum healthbar;
 Junk junk;
@@ -70,8 +70,10 @@ void draw(){
      stars[i].display();
     }
     //location
-     earth.update();
-     earth.display();
+    for(Planet planet : planets){
+      planet.update();
+      planet.display();
+    }
   
     //viewscreen
     if(showDialogue){
@@ -112,9 +114,16 @@ void init(){
     println(item);
   }
   //location
-  earth = new Planet(2*width/3, height/4, 50);
+  //150 to 450, 100 to 200, 50 to 375, 0 to 50
+  planets = new Planet[3];
+  planets[0] = new Planet(0.15*width, 0.3*height, 315, 20, 15, 8);
+  planets[1] = new Planet(0.25*width, 0.2 * height, 20, 5, 36, 40);
+  planets[2] = new Planet(0.9*width, 0.45*height, 18, 17, 50, 5);
   //dialogue
   person = new Person();
+  char[] q = binary(healthbar.checksum).toCharArray();
+  q[q.length - 7] = '1';
+  healthbar.checksum = unbinary(new String(q));  
   //junk
   junk = new Junk();
   
@@ -123,6 +132,7 @@ void init(){
 
 void dropOutOfWarp(){
   speed = 0.00;
+<<<<<<< HEAD
   float rndX = 183; // 150 to 450
   float rndY = 197; // 100, 200
   x = map(rndX, 0.25*width, 0.75*width, 0, 10);
@@ -130,6 +140,14 @@ void dropOutOfWarp(){
   earth = new Planet(rndX, rndY, random(50, 375));
   earth.sliders();
   location = "Nerd Prime";
+=======
+  float rndX = 322; // 150 to 450
+  float rndY = 120; // 100, 200
+  x = map(rndX, 0.25*width, 0.75*width, 0, 10);
+  y = map(rndY, 0.25*height, 0.5*height, 0, 10);
+  planets[0].sliders();
+  location = "Kessel";
+>>>>>>> main
 }
 
 void noSignal(){
